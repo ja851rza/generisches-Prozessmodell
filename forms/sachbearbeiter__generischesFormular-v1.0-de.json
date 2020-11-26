@@ -1,0 +1,338 @@
+{
+  "id": "6000357:sachbearbeiter__generischesFormular:v1.0",
+  "sections": [
+    {
+      "title": "Name natürliche Person",
+      "fieldGroups": [
+        {
+          "id": "G0000075",
+          "title": "Name natürliche Person",
+          "rows": [
+            {
+              "fields": [
+                {
+                  "id": "F000149",
+                  "label": "Anrede",
+                  "type": "DROPDOWN_SINGLE_SELECT",
+                  "disabled": true,
+                  "helptext": "Herr",
+                  "possibleValues": [
+                    {
+                      "label": "Herr",
+                      "value": "male"
+                    },
+                    {
+                      "label": "Frau",
+                      "value": "female"
+                    }
+                  ],
+                  "value": "",
+                  "width": 3
+                }
+              ]
+            },
+            {
+              "fields": [
+                {
+                  "id": "surname",
+                  "label": "Vorname",
+                  "type": "STRING",
+                  "disabled": true,
+                  "required": false,
+                  "placeholder": "Max",
+                  "value": "",
+                  "width": 4
+                },
+                {
+                  "id": "F000159",
+                  "label": "Nachname",
+                  "type": "STRING",
+                  "disabled": true,
+                  "required": false,
+                  "placeholder": "Mustermann",
+                  "value": "",
+                  "width": 4
+                }
+              ]
+            },
+            {
+              "fields": [
+                {
+                  "id": "F000031",
+                  "label": "Geburtsname",
+                  "type": "STRING",
+                  "disabled": true,
+                  "required": false,
+                  "value": "",
+                  "width": 4
+                },
+                {
+                  "id": "birthDate",
+                  "label": "Geburtsdatum",
+                  "type": "DATE",
+                  "placeholder": "08.07.2015",
+                  "value": 1436341579368,
+                  "width": 4
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "G000012",
+          "title": "Anschrift",
+          "rows": [
+            {
+              "fields": [
+                {
+                  "id": "F000007",
+                  "label": "Anschrift Typ",
+                  "type": "DROPDOWN_SINGLE_SELECT",
+                  "disabled": true,
+                  "possibleValues": [],
+                  "value": "",
+                  "width": 8
+                }
+              ]
+            },
+            {
+              "fields": [
+                {
+                  "id": "F000067",
+                  "label": "Straße",
+                  "type": "STRING",
+                  "disabled": true,
+                  "required": false,
+                  "value": "",
+                  "width": 6
+                },
+                {
+                  "id": "F000033",
+                  "label": "Hausnummer",
+                  "type": "STRING",
+                  "disabled": true,
+                  "required": false,
+                  "value": "",
+                  "width": 2
+                }
+              ]
+            },
+            {
+              "fields": [
+                {
+                  "id": "F000002",
+                  "label": "Adresszusatz",
+                  "type": "STRING",
+                  "disabled": true,
+                  "required": false,
+                  "value": "",
+                  "width": 8
+                }
+              ]
+            },
+            {
+              "fields": [
+                {
+                  "id": "F000058",
+                  "label": "Postfach",
+                  "type": "STRING",
+                  "disabled": false,
+                  "required": false,
+                  "value": "",
+                  "width": 8
+                }
+              ]
+            },
+            {
+              "fields": [
+                {
+                  "id": "F000059",
+                  "label": "Postleitzahl",
+                  "type": "STRING",
+                  "disabled": false,
+                  "required": false,
+                  "value": "",
+                  "width": 2
+                },
+                {
+                  "id": "F000055",
+                  "label": "Ort",
+                  "type": "STRING",
+                  "disabled": false,
+                  "required": false,
+                  "value": "",
+                  "width": 6
+                }
+              ]
+            },
+            {
+              "fields": [
+                {
+                  "id": "F000056",
+                  "label": "Ortsteil",
+                  "type": "STRING",
+                  "disabled": false,
+                  "required": false,
+                  "value": "",
+                  "width": 4
+                },
+                {
+                  "id": "F000063",
+                  "label": "Staat",
+                  "type": "STRING",
+                  "disabled": false,
+                  "required": false,
+                  "value": "",
+                  "width": 4
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "bankData",
+          "title": "Bankverbindung",
+          "rows": [
+            {
+              "fields": [
+                {
+                  "id": "bankOwnerName",
+                  "label": "Kontoinhaber Vorname",
+                  "type": "STRING",
+                  "disabled": true,
+                  "required": true,
+                  "placeholder": "Max",
+                  "value": "",
+                  "width": 4
+                },
+                {
+                  "id": "bankOwnerSurname",
+                  "label": "Kontoinhaber Nachname",
+                  "type": "STRING",
+                  "disabled": true,
+                  "required": true,
+                  "placeholder": "Mustermann",
+                  "value": null,
+                  "width": 4
+                }
+              ]
+            },
+            {
+              "fields": [
+                {
+                  "id": "bankName",
+                  "label": "Bankinstitut",
+                  "type": "STRING",
+                  "placeholder": "Deutsche Bank AG",
+                  "value": null,
+                  "width": 8
+                }
+              ]
+            },
+            {
+              "fields": [
+                {
+                  "id": "bankBIC",
+                  "label": "BIC",
+                  "type": "STRING",
+                  "placeholder": "DEUTDEFFXXX",
+                  "value": null,
+                  "width": 4
+                },
+                {
+                  "id": "bankBLZ",
+                  "label": "BLZ",
+                  "type": "STRING",
+                  "placeholder": "10070024",
+                  "value": null,
+                  "width": 4
+                }
+              ]
+            },
+            {
+              "fields": [
+                {
+                  "id": "bankIBAN",
+                  "label": "IBAN",
+                  "type": "STRING",
+                  "disabled": true,
+                  "required": true,
+                  "placeholder": "DE41 5001 0517 0123 4567 89",
+                  "requiredValidationFailedMessage": "Geben sie ein Format wie dieses ein: DE12 1234 1234 1234 1234 12",
+                  "helptext": "Bitte geben Sie die IBAN in folgendem Format an: DE00 0000 0000 0000 0000 00",
+                  "value": null,
+                  "width": 8,
+                  "target": {
+                    "service": "prozess",
+                    "variableName": "bankIban"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Antragsgenehmigung",
+      "fieldGroups": [
+        {
+          "id": "57eab66c",
+          "title": "",
+          "rows": [
+            {
+              "fields": [
+                {
+                  "id": "900ebdd9",
+                  "label": "",
+                  "type": "RADIO_BUTTONS",
+                  "possibleValues": [
+                    {
+                      "label": "Ja, Antrag genehmigen",
+                      "value": "angenommen"
+                    },
+                    {
+                      "label": "Nein, Antrag ablehnen",
+                      "value": "abgelehnt"
+                    }
+                  ],
+                  "value": "",
+                  "width": 8,
+                  "layout": "",
+                  "target": {
+                    "service": "prozess",
+                    "variableName": "radioAntrag"
+                  }
+                }
+              ]
+            },
+            {
+              "fields": [
+                {
+                  "id": "9654ddb0",
+                  "label": "Kommentar für den Antragsteller:",
+                  "type": "TEXTAREA",
+                  "placeholder": "Dieser Kommentar wird an den Antragsteller in einer Nachricht gesendet.",
+                  "value": null,
+                  "width": 8,
+                  "target": {
+                    "service": "prozess",
+                    "variableName": "kommentarAnAntragsteller"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "source": {
+    "service": "prozess",
+    "variableName": "genericForm"
+  },
+  "target": {
+    "service": "prozess",
+    "variableName": "copyToCaseworker"
+  }
+}

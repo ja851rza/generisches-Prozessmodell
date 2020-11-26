@@ -1,0 +1,313 @@
+{
+  "id": "6000357:generischesFormular:v1.0",
+  "sections": [
+    {
+      "title": "",
+      "fieldGroups": [
+        {
+          "id": "personalDataGroup",
+          "title": "Name natürliche Person",
+          "rows": [
+            {
+              "fields": [
+                {
+                  "id": "genderOfAssignee",
+                  "label": "Anrede",
+                  "type": "DROPDOWN_SINGLE_SELECT",
+                  "disabled": false,
+                  "helptext": "Herr",
+                  "possibleValues": [
+                    {
+                      "label": "Herr",
+                      "value": "male"
+                    },
+                    {
+                      "label": "Frau",
+                      "value": "female"
+                    }
+                  ],
+                  "value": "",
+                  "width": 3
+                }
+              ]
+            },
+            {
+              "fields": [
+                {
+                  "id": "surname",
+                  "label": "Vorname",
+                  "type": "STRING",
+                  "disabled": false,
+                  "required": false,
+                  "placeholder": "Max",
+                  "value": "",
+                  "width": 4,
+                  "source": {
+                    "service": "servicekonto",
+                    "variableName": "vorname"
+                  }
+                },
+                {
+                  "id": "F000159",
+                  "label": "Nachname",
+                  "type": "STRING",
+                  "disabled": false,
+                  "required": false,
+                  "placeholder": "Mustermann",
+                  "value": "",
+                  "width": 4,
+                  "source": {
+                    "service": "servicekonto",
+                    "variableName": "nachname"
+                  }
+                }
+              ]
+            },
+            {
+              "fields": [
+                {
+                  "id": "F000031",
+                  "label": "Geburtsname",
+                  "type": "STRING",
+                  "disabled": false,
+                  "required": false,
+                  "value": "",
+                  "width": 4,
+                  "source": {
+                    "service": "servicekonto",
+                    "variableName": "geburtsname"
+                  }
+                },
+                {
+                  "id": "birthDate",
+                  "label": "Geburtsdatum",
+                  "type": "DATE",
+                  "placeholder": "08.07.2015",
+                  "value": 1436341579368,
+                  "width": 4,
+                  "source": {
+                    "service": "servicekonto",
+                    "variableName": "geburtsdatum"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "adressGroup",
+          "title": "Anschrift",
+          "rows": [
+            {
+              "fields": [
+                {
+                  "id": "typeOfAdress",
+                  "label": "Anschrift Typ",
+                  "type": "DROPDOWN_SINGLE_SELECT",
+                  "disabled": false,
+                  "possibleValues": [],
+                  "value": "",
+                  "width": 8
+                }
+              ]
+            },
+            {
+              "fields": [
+                {
+                  "id": "streetName",
+                  "label": "Straße",
+                  "type": "STRING",
+                  "disabled": false,
+                  "required": false,
+                  "value": "",
+                  "width": 6,
+                  "source": {
+                    "service": "servicekonto",
+                    "variableName": "strasse"
+                  }
+                },
+                {
+                  "id": "houseNumber",
+                  "label": "Hausnummer",
+                  "type": "STRING",
+                  "disabled": false,
+                  "required": false,
+                  "value": "",
+                  "width": 2,
+                  "source": {
+                    "service": "servicekonto",
+                    "variableName": "hausnummer"
+                  }
+                }
+              ]
+            },
+            {
+              "fields": [
+                {
+                  "id": "additionalAdress",
+                  "label": "Adresszusatz",
+                  "type": "STRING",
+                  "disabled": false,
+                  "required": false,
+                  "value": "",
+                  "width": 8
+                }
+              ]
+            },
+            {
+              "fields": [
+                {
+                  "id": "postOfficeBox",
+                  "label": "Postfach",
+                  "type": "STRING",
+                  "disabled": false,
+                  "required": false,
+                  "value": "",
+                  "width": 8
+                }
+              ]
+            },
+            {
+              "fields": [
+                {
+                  "id": "postalCode",
+                  "label": "Postleitzahl",
+                  "type": "STRING",
+                  "disabled": false,
+                  "required": false,
+                  "value": "",
+                  "width": 2
+                },
+                {
+                  "id": "city",
+                  "label": "Ort",
+                  "type": "STRING",
+                  "disabled": false,
+                  "required": false,
+                  "value": "",
+                  "width": 6
+                }
+              ]
+            },
+            {
+              "fields": [
+                {
+                  "id": "district",
+                  "label": "Ortsteil",
+                  "type": "STRING",
+                  "disabled": false,
+                  "required": false,
+                  "value": "",
+                  "width": 4
+                },
+                {
+                  "id": "state",
+                  "label": "Staat",
+                  "type": "STRING",
+                  "disabled": false,
+                  "required": false,
+                  "value": "",
+                  "width": 4
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "bankData",
+          "title": "Bankverbindung",
+          "rows": [
+            {
+              "fields": [
+                {
+                  "id": "bankOwnerName",
+                  "label": "Kontoinhaber Vorname",
+                  "type": "STRING",
+                  "required": true,
+                  "placeholder": "Max",
+                  "value": "",
+                  "width": 4,
+                  "source": {
+                    "service": "servicekonto",
+                    "variableName": "vorname"
+                  }
+                },
+                {
+                  "id": "bankOwnerSurname",
+                  "label": "Kontoinhaber Nachname",
+                  "type": "STRING",
+                  "required": true,
+                  "placeholder": "Mustermann",
+                  "value": null,
+                  "width": 4,
+                  "source": {
+                    "service": "servicekonto",
+                    "variableName": "nachname"
+                  }
+                }
+              ]
+            },
+            {
+              "fields": [
+                {
+                  "id": "bankName",
+                  "label": "Bankinstitut",
+                  "type": "STRING",
+                  "placeholder": "Deutsche Bank AG",
+                  "value": null,
+                  "width": 8
+                }
+              ]
+            },
+            {
+              "fields": [
+                {
+                  "id": "bankBIC",
+                  "label": "BIC",
+                  "type": "STRING",
+                  "placeholder": "DEUTDEFFXXX",
+                  "value": null,
+                  "width": 4
+                },
+                {
+                  "id": "bankBLZ",
+                  "label": "BLZ",
+                  "type": "STRING",
+                  "placeholder": "10070024",
+                  "value": null,
+                  "width": 4
+                }
+              ]
+            },
+            {
+              "fields": [
+                {
+                  "id": "bankIBAN",
+                  "label": "IBAN",
+                  "type": "STRING",
+                  "required": true,
+                  "placeholder": "DE41 5001 0517 0123 4567 89",
+                  "helptext": "Bitte geben Sie die IBAN in folgendem Format an: DE00 0000 0000 0000 0000 00",
+                  "value": null,
+                  "width": 8,
+                  "target": {
+                    "service": "prozess",
+                    "variableName": "bankIban"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "source": {
+    "service": "prozess",
+    "variableName": "genericForm"
+  },
+  "target": {
+    "service": "prozess",
+    "variableName": "genericForm"
+  }
+}

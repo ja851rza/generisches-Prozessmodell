@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="ELEKTRONISCHER_ANTRAG">
+  <process id="m6000357.generischesProzessmodell" name="generischesProzessmodell" isExecutable="true">
+    <startEvent id="startevent1" name="Start"></startEvent>
+    <userTask id="userLogin" name="Login Antragsteller" activiti:assignee="${startedBy}" activiti:formKey="serviceportal-login"></userTask>
+    <userTask id="userTaskFillForm" name="${nameOfForm}" activiti:assignee="${startedBy}" activiti:formKey="formular:6000357:generischesFormular:v1.0"></userTask>
+    <endEvent id="endevent1" name="End"></endEvent>
+    <userTask id="finalMessageForAssignee" name="REPLACE_ME(9)" activiti:assignee="${startedBy}" activiti:formKey="showOnce">
+      <documentation>REPLACE_ME(10)</documentation>
+    </userTask>
+    <scriptTask id="inputValidation" name="Validierung der Daten" scriptFormat="groovy" activiti:autoStoreVariables="false">
+      <script><![CDATA[import org.activiti.engine.delegate.DelegateExecution
+import de.seitenbau.serviceportal.prozess.scripttask.ProzessParameterReader
+import de.seitenbau.serviceportal.formulare.api.FormContent
+import de.seitenbau.serviceportal.formulare.api.FormFieldContent
+DelegateExecution execution = execution
+// Calling form by 'genericForm' and put it into the variable 'applicationForm'
+FormContent applicationForm = execution.getVariable("genericForm") as FormContent
+// Setting 'isFormValid' to true
+// So If there are no issues, the process will continue to the next step
+execution.setVariable("isFormValid", true)
+// IBAN validation start
+// IBAN validation end
+// PLZ validation start
+// PLZ validation end
+// birthDate validation maximum age start
+// birthDate validation maximum age end
+// birthDate validation minimum required age start
+// birthDate validation minimum required age end]]></script>
+    </scriptTask>
+    <sequenceFlow id="flow32" sourceRef="userTaskFillForm" targetRef="inputValidation"></sequenceFlow>
+    <exclusiveGateway id="exclusivegateway1" name="Exclusive Gateway"></exclusiveGateway>
+    <sequenceFlow id="flow33" sourceRef="inputValidation" targetRef="exclusivegateway1"></sequenceFlow>
+    <sequenceFlow id="flow34" name="Validierung fehlgeschlagen" sourceRef="exclusivegateway1" targetRef="userTaskFillForm">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${isFormValid==false}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow35" name="Validierung gelungen" sourceRef="exclusivegateway1" targetRef="createPdfForAssignee">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${isFormValid==true}]]></conditionExpression>
+    </sequenceFlow>
+    <serviceTask id="createPdfForAssignee" name="PDF für Antragsteller" activiti:class="de.seitenbau.serviceportal.prozess.servicetask.PdfErstellenService">
+      <extensionElements>
+        <activiti:field name="source">
+          <activiti:expression><![CDATA[${genericForm}]]></activiti:expression>
+        </activiti:field>
+        <activiti:field name="target">
+          <activiti:expression><![CDATA[pdfAntrag]]></activiti:expression>
+        </activiti:field>
+      </extensionElements>
+    </serviceTask>
+    <serviceTask id="sendMessageToAssignee" name="Antragskopie an Antragsteller" activiti:class="de.seitenbau.serviceportal.prozess.servicetask.NachrichtAnMSBWService">
+      <extensionElements>
+        <activiti:field name="empfaengerId">
+          <activiti:expression><![CDATA[${startedBy}]]></activiti:expression>
+        </activiti:field>
+        <activiti:field name="betreff">
+          <activiti:expression><![CDATA[REPLACE_ME(5)]]></activiti:expression>
+        </activiti:field>
+        <activiti:field name="text">
+          <activiti:expression><![CDATA[REPLACE_ME(6)]]></activiti:expression>
+        </activiti:field>
+        <activiti:field name="anhaenge">
+          <activiti:expression><![CDATA[${pdfAntrag}]]></activiti:expression>
+        </activiti:field>
+      </extensionElements>
+    </serviceTask>
+    <serviceTask id="sendMessageToCaseWorker" name="Antrag an Sachbearbeiter" activiti:class="de.seitenbau.serviceportal.prozess.servicetask.NachrichtAnMSBWService">
+      <extensionElements>
+        <activiti:field name="empfaengerId">
+          <activiti:expression><![CDATA[${responsibleCaseworkerId}]]></activiti:expression>
+        </activiti:field>
+        <activiti:field name="betreff">
+          <activiti:expression><![CDATA[REPLACE_ME(7)]]></activiti:expression>
+        </activiti:field>
+        <activiti:field name="text">
+          <activiti:expression><![CDATA[REPLACE_ME(8)]]></activiti:expression>
+        </activiti:field>
+        <activiti:field name="senderId">
+          <activiti:expression><![CDATA[${startedBy}]]></activiti:expression>
+        </activiti:field>
+      </extensionElements>
+    </serviceTask>
+    <sequenceFlow id="flow44" sourceRef="finalMessageForAssignee" targetRef="approveFormByCaseWorker"></sequenceFlow>
+    <userTask id="approveFormByCaseWorker" name="Prüfung durch Sachbearbeiter" activiti:assignee="${responsibleCaseworkerId}" activiti:formKey="REPLACE_ME(10)"></userTask>
+    <exclusiveGateway id="decisionGatewayForForm" name="Exclusive Gateway"></exclusiveGateway>
+    <serviceTask id="sendRejectionToAssignee" name="Ablehnbescheid an Antragsteller" activiti:class="de.seitenbau.serviceportal.prozess.servicetask.NachrichtAnMSBWService">
+      <extensionElements>
+        <activiti:field name="empfaengerId">
+          <activiti:expression><![CDATA[${startedBy}]]></activiti:expression>
+        </activiti:field>
+        <activiti:field name="betreff">
+          <activiti:expression><![CDATA[Ablehnbescheid]]></activiti:expression>
+        </activiti:field>
+        <activiti:field name="text">
+          <activiti:expression><![CDATA[${kommentarAnAntragsteller}]]></activiti:expression>
+        </activiti:field>
+      </extensionElements>
+    </serviceTask>
+    <serviceTask id="sendApprovalToAssignee" name="Genehomigungsbescheid an Antragsteller" activiti:class="de.seitenbau.serviceportal.prozess.servicetask.NachrichtAnMSBWService">
+      <extensionElements>
+        <activiti:field name="empfaengerId">
+          <activiti:expression><![CDATA[${startedBy}]]></activiti:expression>
+        </activiti:field>
+        <activiti:field name="betreff">
+          <activiti:expression><![CDATA[Genehmigung]]></activiti:expression>
+        </activiti:field>
+        <activiti:field name="text">
+          <activiti:expression><![CDATA[${kommentarAnAntragsteller}]]></activiti:expression>
+        </activiti:field>
+      </extensionElements>
+    </serviceTask>
+    <exclusiveGateway id="exclusivegateway3" name="Exclusive Gateway"></exclusiveGateway>
+    <sequenceFlow id="flow46" sourceRef="decisionGatewayForForm" targetRef="sendRejectionToAssignee">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${radioAntrag=="abgelehnt"}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow47" sourceRef="decisionGatewayForForm" targetRef="sendApprovalToAssignee">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${radioAntrag=="angenommen"}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow48" sourceRef="sendRejectionToAssignee" targetRef="exclusivegateway3"></sequenceFlow>
+    <sequenceFlow id="flow49" sourceRef="sendApprovalToAssignee" targetRef="exclusivegateway3"></sequenceFlow>
+    <userTask id="finalMessageForCaseWorker" name="REPLACE_ME(13)" activiti:assignee="${responsibleCaseworkerId}" activiti:formKey="showOnce">
+      <documentation>Sie haben diesen Antrag mit ${radioAntrag} beantwortet.
+
+REPLACE_ME(11)</documentation>
+    </userTask>
+    <sequenceFlow id="flow51" sourceRef="finalMessageForCaseWorker" targetRef="endevent1"></sequenceFlow>
+    <sequenceFlow id="flow52" sourceRef="startevent1" targetRef="userLogin"></sequenceFlow>
+    <sequenceFlow id="flow53" sourceRef="userLogin" targetRef="requiredParameters"></sequenceFlow>
+    <serviceTask id="createPdfForCaseWorker" name="PDF für den Sachbearbeiter erzeugen" activiti:class="de.seitenbau.serviceportal.prozess.servicetask.PdfErstellenService">
+      <extensionElements>
+        <activiti:field name="source">
+          <activiti:expression><![CDATA[${copyToCaseworker}]]></activiti:expression>
+        </activiti:field>
+        <activiti:field name="target">
+          <activiti:expression><![CDATA[bearbeiteterAntrag]]></activiti:expression>
+        </activiti:field>
+      </extensionElements>
+    </serviceTask>
+    <serviceTask id="sendApprovedFormToCaseWorker" name="Bearbeiteter Antrag an Sachbearbeiter" activiti:class="de.seitenbau.serviceportal.prozess.servicetask.NachrichtAnMSBWService">
+      <extensionElements>
+        <activiti:field name="empfaengerId">
+          <activiti:expression><![CDATA[${responsibleCaseworkerId}]]></activiti:expression>
+        </activiti:field>
+        <activiti:field name="betreff">
+          <activiti:expression><![CDATA[REPLACE_ME(11)]]></activiti:expression>
+        </activiti:field>
+        <activiti:field name="text">
+          <activiti:expression><![CDATA[REPLACE_ME(12)]]></activiti:expression>
+        </activiti:field>
+        <activiti:field name="senderId">
+          <activiti:expression><![CDATA[${startedBy}]]></activiti:expression>
+        </activiti:field>
+        <activiti:field name="anhaenge">
+          <activiti:expression><![CDATA[${bearbeiteterAntrag}]]></activiti:expression>
+        </activiti:field>
+      </extensionElements>
+    </serviceTask>
+    <parallelGateway id="sendMessageSimultaneously" name="Parallel Gateway"></parallelGateway>
+    <sequenceFlow id="flow54" sourceRef="createPdfForAssignee" targetRef="sendMessageSimultaneously"></sequenceFlow>
+    <sequenceFlow id="flow55" sourceRef="sendMessageSimultaneously" targetRef="sendMessageToCaseWorker"></sequenceFlow>
+    <sequenceFlow id="flow56" sourceRef="sendMessageSimultaneously" targetRef="sendMessageToAssignee"></sequenceFlow>
+    <parallelGateway id="parallelgateway2" name="Parallel Gateway"></parallelGateway>
+    <sequenceFlow id="flow57" sourceRef="parallelgateway2" targetRef="finalMessageForAssignee"></sequenceFlow>
+    <sequenceFlow id="flow58" sourceRef="sendMessageToCaseWorker" targetRef="parallelgateway2"></sequenceFlow>
+    <sequenceFlow id="flow59" sourceRef="sendMessageToAssignee" targetRef="parallelgateway2"></sequenceFlow>
+    <sequenceFlow id="flow60" sourceRef="createPdfForCaseWorker" targetRef="sendApprovedFormToCaseWorker"></sequenceFlow>
+    <scriptTask id="requiredParameters" name="Parameterübergabe" scriptFormat="groovy" activiti:autoStoreVariables="false">
+      <script><![CDATA[import org.activiti.engine.delegate.DelegateExecution
+DelegateExecution execution = execution
+// Defining caseworker who receives messages and approves Form
+// Replace 'REPLACE_ME(2)' with userId:<ID_of_caseworker>
+String responsibleCaseworkerId = "userId:774513872970"
+// Replace 'REPLACE_ME(3)' by the name of the Form
+String titleOfForm = "Gewerbeanmeldung"
+// Organisationseinheit ID is required to find the Prozess
+String epayblOeId = "6016982"
+execution.setVariable("responsibleCaseworkerId", responsibleCaseworkerId)
+execution.setVariable("nameOfForm", titleOfForm)
+execution.setVariable("epayblOeId", epayblOeId)]]></script>
+    </scriptTask>
+    <sequenceFlow id="flow62" sourceRef="requiredParameters" targetRef="userTaskFillForm"></sequenceFlow>
+    <sequenceFlow id="flow63" sourceRef="approveFormByCaseWorker" targetRef="decisionGatewayForForm"></sequenceFlow>
+    <sequenceFlow id="flow65" sourceRef="sendApprovedFormToCaseWorker" targetRef="finalMessageForCaseWorker"></sequenceFlow>
+    <sequenceFlow id="flow66" sourceRef="exclusivegateway3" targetRef="createPdfForCaseWorker"></sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_m6000357.generischesProzessmodell">
+    <bpmndi:BPMNPlane bpmnElement="m6000357.generischesProzessmodell" id="BPMNPlane_m6000357.generischesProzessmodell">
+      <bpmndi:BPMNShape bpmnElement="startevent1" id="BPMNShape_startevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="110.0" y="138.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="userLogin" id="BPMNShape_userLogin">
+        <omgdc:Bounds height="55.0" width="105.0" x="191.0" y="128.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="userTaskFillForm" id="BPMNShape_userTaskFillForm">
+        <omgdc:Bounds height="66.0" width="105.0" x="470.0" y="124.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endevent1" id="BPMNShape_endevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="110.0" y="326.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="finalMessageForAssignee" id="BPMNShape_finalMessageForAssignee">
+        <omgdc:Bounds height="68.0" width="105.0" x="1164.0" y="310.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="inputValidation" id="BPMNShape_inputValidation">
+        <omgdc:Bounds height="61.0" width="105.0" x="630.0" y="126.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusivegateway1" id="BPMNShape_exclusivegateway1">
+        <omgdc:Bounds height="40.0" width="40.0" x="780.0" y="137.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="createPdfForAssignee" id="BPMNShape_createPdfForAssignee">
+        <omgdc:Bounds height="55.0" width="105.0" x="924.0" y="130.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sendMessageToAssignee" id="BPMNShape_sendMessageToAssignee">
+        <omgdc:Bounds height="61.0" width="105.0" x="1110.0" y="71.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sendMessageToCaseWorker" id="BPMNShape_sendMessageToCaseWorker">
+        <omgdc:Bounds height="61.0" width="105.0" x="1110.0" y="183.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="approveFormByCaseWorker" id="BPMNShape_approveFormByCaseWorker">
+        <omgdc:Bounds height="61.0" width="105.0" x="1000.0" y="313.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="decisionGatewayForForm" id="BPMNShape_decisionGatewayForForm">
+        <omgdc:Bounds height="40.0" width="40.0" x="904.0" y="323.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sendRejectionToAssignee" id="BPMNShape_sendRejectionToAssignee">
+        <omgdc:Bounds height="61.0" width="105.0" x="800.0" y="262.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sendApprovalToAssignee" id="BPMNShape_sendApprovalToAssignee">
+        <omgdc:Bounds height="61.0" width="105.0" x="800.0" y="363.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusivegateway3" id="BPMNShape_exclusivegateway3">
+        <omgdc:Bounds height="40.0" width="40.0" x="760.0" y="323.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="finalMessageForCaseWorker" id="BPMNShape_finalMessageForCaseWorker">
+        <omgdc:Bounds height="61.0" width="105.0" x="214.0" y="313.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="createPdfForCaseWorker" id="BPMNShape_createPdfForCaseWorker">
+        <omgdc:Bounds height="75.0" width="105.0" x="630.0" y="306.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sendApprovedFormToCaseWorker" id="BPMNShape_sendApprovedFormToCaseWorker">
+        <omgdc:Bounds height="61.0" width="105.0" x="436.0" y="313.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sendMessageSimultaneously" id="BPMNShape_sendMessageSimultaneously">
+        <omgdc:Bounds height="40.0" width="40.0" x="1060.0" y="136.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="parallelgateway2" id="BPMNShape_parallelgateway2">
+        <omgdc:Bounds height="40.0" width="40.0" x="1220.0" y="136.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="requiredParameters" id="BPMNShape_requiredParameters">
+        <omgdc:Bounds height="55.0" width="105.0" x="330.0" y="128.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flow32" id="BPMNEdge_flow32">
+        <omgdi:waypoint x="575.0" y="157.0"></omgdi:waypoint>
+        <omgdi:waypoint x="630.0" y="156.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow33" id="BPMNEdge_flow33">
+        <omgdi:waypoint x="735.0" y="156.0"></omgdi:waypoint>
+        <omgdi:waypoint x="780.0" y="157.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow34" id="BPMNEdge_flow34">
+        <omgdi:waypoint x="800.0" y="137.0"></omgdi:waypoint>
+        <omgdi:waypoint x="799.0" y="93.0"></omgdi:waypoint>
+        <omgdi:waypoint x="521.0" y="93.0"></omgdi:waypoint>
+        <omgdi:waypoint x="522.0" y="124.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="39.0" width="100.0" x="804.0" y="102.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow35" id="BPMNEdge_flow35">
+        <omgdi:waypoint x="820.0" y="157.0"></omgdi:waypoint>
+        <omgdi:waypoint x="924.0" y="157.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="13.0" width="100.0" x="820.0" y="157.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow44" id="BPMNEdge_flow44">
+        <omgdi:waypoint x="1164.0" y="344.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1105.0" y="343.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow46" id="BPMNEdge_flow46">
+        <omgdi:waypoint x="924.0" y="323.0"></omgdi:waypoint>
+        <omgdi:waypoint x="923.0" y="294.0"></omgdi:waypoint>
+        <omgdi:waypoint x="905.0" y="292.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow47" id="BPMNEdge_flow47">
+        <omgdi:waypoint x="924.0" y="363.0"></omgdi:waypoint>
+        <omgdi:waypoint x="924.0" y="392.0"></omgdi:waypoint>
+        <omgdi:waypoint x="905.0" y="393.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow48" id="BPMNEdge_flow48">
+        <omgdi:waypoint x="800.0" y="292.0"></omgdi:waypoint>
+        <omgdi:waypoint x="779.0" y="292.0"></omgdi:waypoint>
+        <omgdi:waypoint x="780.0" y="323.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow49" id="BPMNEdge_flow49">
+        <omgdi:waypoint x="800.0" y="393.0"></omgdi:waypoint>
+        <omgdi:waypoint x="779.0" y="393.0"></omgdi:waypoint>
+        <omgdi:waypoint x="780.0" y="363.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow51" id="BPMNEdge_flow51">
+        <omgdi:waypoint x="214.0" y="343.0"></omgdi:waypoint>
+        <omgdi:waypoint x="145.0" y="343.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow52" id="BPMNEdge_flow52">
+        <omgdi:waypoint x="145.0" y="155.0"></omgdi:waypoint>
+        <omgdi:waypoint x="191.0" y="155.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow53" id="BPMNEdge_flow53">
+        <omgdi:waypoint x="296.0" y="155.0"></omgdi:waypoint>
+        <omgdi:waypoint x="330.0" y="155.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow54" id="BPMNEdge_flow54">
+        <omgdi:waypoint x="1029.0" y="157.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1060.0" y="156.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow55" id="BPMNEdge_flow55">
+        <omgdi:waypoint x="1080.0" y="176.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1079.0" y="213.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1110.0" y="213.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow56" id="BPMNEdge_flow56">
+        <omgdi:waypoint x="1080.0" y="136.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1080.0" y="101.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1110.0" y="101.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow57" id="BPMNEdge_flow57">
+        <omgdi:waypoint x="1260.0" y="156.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1299.0" y="155.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1299.0" y="342.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1269.0" y="344.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow58" id="BPMNEdge_flow58">
+        <omgdi:waypoint x="1215.0" y="213.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1240.0" y="213.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1240.0" y="176.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow59" id="BPMNEdge_flow59">
+        <omgdi:waypoint x="1215.0" y="101.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1239.0" y="102.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1240.0" y="136.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow60" id="BPMNEdge_flow60">
+        <omgdi:waypoint x="630.0" y="343.0"></omgdi:waypoint>
+        <omgdi:waypoint x="541.0" y="343.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow62" id="BPMNEdge_flow62">
+        <omgdi:waypoint x="435.0" y="155.0"></omgdi:waypoint>
+        <omgdi:waypoint x="470.0" y="157.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow63" id="BPMNEdge_flow63">
+        <omgdi:waypoint x="1000.0" y="343.0"></omgdi:waypoint>
+        <omgdi:waypoint x="944.0" y="343.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow65" id="BPMNEdge_flow65">
+        <omgdi:waypoint x="436.0" y="343.0"></omgdi:waypoint>
+        <omgdi:waypoint x="319.0" y="343.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow66" id="BPMNEdge_flow66">
+        <omgdi:waypoint x="760.0" y="343.0"></omgdi:waypoint>
+        <omgdi:waypoint x="735.0" y="343.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>
