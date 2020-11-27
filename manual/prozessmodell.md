@@ -90,15 +90,15 @@ vorgesehenen Stellen einfügen. Die Stelle an der eine Validierung eingefügt we
 
 Bei der Validierung der Daten haben Sie mehrere Optionen zur auswahl:
  - Validierung der IBAN
-    - Den Code für die Validierung der IBAN finden Sie unter [IBAN-Validation](../manual/IBANValidation.groovy)
+    - Den Code für die Validierung der IBAN finden Sie unter [IBAN-Validation](scripts/IBANValidation.groovy)
  - Validierung des Alters ***bis*** zu einer gewissen Altersgrenze
-    - Der Code für die Validierung des maximal zulässigen Alters ist in [MaximumAgeValidation](../manual/MaximumAgeValidation.groovy) 
+    - Der Code für die Validierung des maximal zulässigen Alters ist in [MaximumAgeValidation](scripts/MaximumAgeValidation.groovy) 
     hinterlegt.
  - Validierung des Alters ***ab*** einer gewissen Altersgrenze
-    - Der Code für die Validierung des minimal zulässigen Alters ist in [MinimumAgeValidation](../manual/MinimumAgeValidation.groovy) 
+    - Der Code für die Validierung des minimal zulässigen Alters ist in [MinimumAgeValidation](scripts/MinimumAgeValidation.groovy) 
         hinterlegt.
  - Validierung der Postleitzahlen im eigenen Zuständigkeitsbereich.
-    - Der Code für die Validierung der Postleitzahlen ist in [PostalCodeValidation](../manual/PostalCodeValidation.groovy)
+    - Der Code für die Validierung der Postleitzahlen ist in [PostalCodeValidation](scripts/PostalCodeValidation.groovy)
     hinterlegt.
  
  Um eine solche Validierung durchführen zu können, müssen Sie den gesamten Code der für Sie benötigten Validierung 
@@ -133,13 +133,13 @@ execution.setVariable("isFormValid", true)
     1. Für die Validierung der IBAN muss das Iban Feld welches Sie Validieren möchten ***bankIBAN*** heißen. 
     Das Feld ist in dem vorgefertigten Skript bereits enthalten. 
     2. damit die IBAN Validiert werden kann, müssen Sie das folgende zwischen ```// IBAN validation start```
-    und ```// IBAN validation end``` den gesamten Code aus der Datei [IBAN-Validation](../manual/IBANValidation.groovy) 
+    und ```// IBAN validation end``` den gesamten Code aus der Datei [IBAN-Validation](scripts/IBANValidation.groovy) 
     einfügen.
 
 2. ***Validierung des Alters ***bis*** zu einer gewissen Altersgrenze***
     1. Damit diese Validierung gelingt, muss das Altersfeld die ID ***birthDate*** besitzen.
     
-    2. Hier müssen Sie den gesamten Code aus [MaximumAgeValidation](../manual/MaximumAgeValidation.groovy)
+    2. Hier müssen Sie den gesamten Code aus [MaximumAgeValidation](scripts/MaximumAgeValidation.groovy)
      zwischen die Zeilen ```// birthDate validation maximum age start``` und 
     ```// birthDate validation maximum age end``` eingefügt werden. 
     
@@ -160,7 +160,7 @@ execution.setVariable("isFormValid", true)
 
     1. Genau wie bei der Validierung zuvor muss das Feld welches Sie validieren möchten die ID ***birthDate*** besitzen.
     
-    2. Hier müssen Sie den Code aus der Datei [MinimumAgeValidation](../manual/MinimumAgeValidation.groovy) 
+    2. Hier müssen Sie den Code aus der Datei [MinimumAgeValidation](scripts/MinimumAgeValidation.groovy) 
     zwischen die Zeilen ```// birthDate validation minimum required age start``` und 
        ```// birthDate validation minimum required age end``` eingefügt werden. 
     
@@ -186,7 +186,7 @@ execution.setVariable("isFormValid", true)
     Hier Finden Sie das Vorgehen zur validierung von Postleitzahlen:
     
     1. Als Erstes müssen Sie den für die Validierung notwendigen Code aus der Datei 
-    [PostalCodeValidation](../manual/PostalCodeValidation.groovy) an die dafür vorgesehene Stelle kopieren. 
+    [PostalCodeValidation](scripts/PostalCodeValidation.groovy) an die dafür vorgesehene Stelle kopieren. 
     Die dafür vorgesehene Stelle beginnt mit ```// PLZ validation start``` und endet mit
     ```// PLZ validation end```.
         

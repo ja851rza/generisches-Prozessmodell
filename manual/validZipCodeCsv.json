@@ -1,1 +1,8 @@
-[{"name":"validZipCodeCsv","description":"CSV Datei, die alle gültigen PLZ spezifiziert. Aufbau: Ort;Zusatz;Plz;Vorwahl;Bundesland","type":"BINARY","required":true}]
+[
+  {
+    "name": "validZipCodeCsv",
+    "description": "CSV Datei, die alle gültigen PLZ spezifiziert. Aufbau: Ort;Zusatz;Plz;Vorwahl;Bundesland",
+    "type": "BINARY",
+    "required": true
+  }
+]

@@ -3,10 +3,10 @@
   <process id="m6000357.generischesProzessmodell" name="generischesProzessmodell" isExecutable="true">
     <startEvent id="startevent1" name="Start"></startEvent>
     <userTask id="userLogin" name="Login Antragsteller" activiti:assignee="${startedBy}" activiti:formKey="serviceportal-login"></userTask>
-    <userTask id="userTaskFillForm" name="${nameOfForm}" activiti:assignee="${startedBy}" activiti:formKey="formular:6000357:generischesFormular:v1.0"></userTask>
+    <userTask id="userTaskFillForm" name="${nameOfForm}" activiti:assignee="${startedBy}" activiti:formKey="REPLACE_ME(3)"></userTask>
     <endEvent id="endevent1" name="End"></endEvent>
-    <userTask id="finalMessageForAssignee" name="REPLACE_ME(9)" activiti:assignee="${startedBy}" activiti:formKey="showOnce">
-      <documentation>REPLACE_ME(10)</documentation>
+    <userTask id="finalMessageForAssignee" name="REPLACE_ME(8)" activiti:assignee="${startedBy}" activiti:formKey="showOnce">
+      <documentation>REPLACE_ME(9)</documentation>
     </userTask>
     <scriptTask id="inputValidation" name="Validierung der Daten" scriptFormat="groovy" activiti:autoStoreVariables="false">
       <script><![CDATA[import org.activiti.engine.delegate.DelegateExecution
@@ -53,10 +53,10 @@ execution.setVariable("isFormValid", true)
           <activiti:expression><![CDATA[${startedBy}]]></activiti:expression>
         </activiti:field>
         <activiti:field name="betreff">
-          <activiti:expression><![CDATA[REPLACE_ME(5)]]></activiti:expression>
+          <activiti:expression><![CDATA[REPLACE_ME(4)]]></activiti:expression>
         </activiti:field>
         <activiti:field name="text">
-          <activiti:expression><![CDATA[REPLACE_ME(6)]]></activiti:expression>
+          <activiti:expression><![CDATA[REPLACE_ME(5)]]></activiti:expression>
         </activiti:field>
         <activiti:field name="anhaenge">
           <activiti:expression><![CDATA[${pdfAntrag}]]></activiti:expression>
@@ -69,10 +69,10 @@ execution.setVariable("isFormValid", true)
           <activiti:expression><![CDATA[${responsibleCaseworkerId}]]></activiti:expression>
         </activiti:field>
         <activiti:field name="betreff">
-          <activiti:expression><![CDATA[REPLACE_ME(7)]]></activiti:expression>
+          <activiti:expression><![CDATA[REPLACE_ME(6)]]></activiti:expression>
         </activiti:field>
         <activiti:field name="text">
-          <activiti:expression><![CDATA[REPLACE_ME(8)]]></activiti:expression>
+          <activiti:expression><![CDATA[REPLACE_ME(7)]]></activiti:expression>
         </activiti:field>
         <activiti:field name="senderId">
           <activiti:expression><![CDATA[${startedBy}]]></activiti:expression>
@@ -88,7 +88,7 @@ execution.setVariable("isFormValid", true)
           <activiti:expression><![CDATA[${startedBy}]]></activiti:expression>
         </activiti:field>
         <activiti:field name="betreff">
-          <activiti:expression><![CDATA[Ablehnbescheid]]></activiti:expression>
+          <activiti:expression><![CDATA[REPLACE_ME(11)]]></activiti:expression>
         </activiti:field>
         <activiti:field name="text">
           <activiti:expression><![CDATA[${kommentarAnAntragsteller}]]></activiti:expression>
@@ -101,7 +101,7 @@ execution.setVariable("isFormValid", true)
           <activiti:expression><![CDATA[${startedBy}]]></activiti:expression>
         </activiti:field>
         <activiti:field name="betreff">
-          <activiti:expression><![CDATA[Genehmigung]]></activiti:expression>
+          <activiti:expression><![CDATA[REPLACE_ME(12)]]></activiti:expression>
         </activiti:field>
         <activiti:field name="text">
           <activiti:expression><![CDATA[${kommentarAnAntragsteller}]]></activiti:expression>
@@ -117,10 +117,10 @@ execution.setVariable("isFormValid", true)
     </sequenceFlow>
     <sequenceFlow id="flow48" sourceRef="sendRejectionToAssignee" targetRef="exclusivegateway3"></sequenceFlow>
     <sequenceFlow id="flow49" sourceRef="sendApprovalToAssignee" targetRef="exclusivegateway3"></sequenceFlow>
-    <userTask id="finalMessageForCaseWorker" name="REPLACE_ME(13)" activiti:assignee="${responsibleCaseworkerId}" activiti:formKey="showOnce">
+    <userTask id="finalMessageForCaseWorker" name="REPLACE_ME(15)" activiti:assignee="${responsibleCaseworkerId}" activiti:formKey="showOnce">
       <documentation>Sie haben diesen Antrag mit ${radioAntrag} beantwortet.
 
-REPLACE_ME(11)</documentation>
+REPLACE_ME(16)</documentation>
     </userTask>
     <sequenceFlow id="flow51" sourceRef="finalMessageForCaseWorker" targetRef="endevent1"></sequenceFlow>
     <sequenceFlow id="flow52" sourceRef="startevent1" targetRef="userLogin"></sequenceFlow>
@@ -141,10 +141,10 @@ REPLACE_ME(11)</documentation>
           <activiti:expression><![CDATA[${responsibleCaseworkerId}]]></activiti:expression>
         </activiti:field>
         <activiti:field name="betreff">
-          <activiti:expression><![CDATA[REPLACE_ME(11)]]></activiti:expression>
+          <activiti:expression><![CDATA[REPLACE_ME(13)]]></activiti:expression>
         </activiti:field>
         <activiti:field name="text">
-          <activiti:expression><![CDATA[REPLACE_ME(12)]]></activiti:expression>
+          <activiti:expression><![CDATA[REPLACE_ME(14)]]></activiti:expression>
         </activiti:field>
         <activiti:field name="senderId">
           <activiti:expression><![CDATA[${startedBy}]]></activiti:expression>
@@ -167,15 +167,12 @@ REPLACE_ME(11)</documentation>
       <script><![CDATA[import org.activiti.engine.delegate.DelegateExecution
 DelegateExecution execution = execution
 // Defining caseworker who receives messages and approves Form
-// Replace 'REPLACE_ME(2)' with userId:<ID_of_caseworker>
-String responsibleCaseworkerId = "userId:774513872970"
-// Replace 'REPLACE_ME(3)' by the name of the Form
-String titleOfForm = "Gewerbeanmeldung"
-// Organisationseinheit ID is required to find the Prozess
-String epayblOeId = "6016982"
+// Replace 'REPLACE_ME(2)' with userId:<ID_of_caseworker> Bsp.:userId:774513872970
+String responsibleCaseworkerId = "REPLACE_ME(2)"
+// Replace 'REPLACE_ME(3)' by the name of the Form Bsp.: Gewerbeanmeldung
+String titleOfForm = "REPLACE_ME(3)"
 execution.setVariable("responsibleCaseworkerId", responsibleCaseworkerId)
-execution.setVariable("nameOfForm", titleOfForm)
-execution.setVariable("epayblOeId", epayblOeId)]]></script>
+execution.setVariable("nameOfForm", titleOfForm)]]></script>
     </scriptTask>
     <sequenceFlow id="flow62" sourceRef="requiredParameters" targetRef="userTaskFillForm"></sequenceFlow>
     <sequenceFlow id="flow63" sourceRef="approveFormByCaseWorker" targetRef="decisionGatewayForForm"></sequenceFlow>
@@ -268,7 +265,7 @@ execution.setVariable("epayblOeId", epayblOeId)]]></script>
         <omgdi:waypoint x="820.0" y="157.0"></omgdi:waypoint>
         <omgdi:waypoint x="924.0" y="157.0"></omgdi:waypoint>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="13.0" width="100.0" x="820.0" y="157.0"></omgdc:Bounds>
+          <omgdc:Bounds height="13.0" width="100.0" x="809.0" y="171.0"></omgdc:Bounds>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow44" id="BPMNEdge_flow44">

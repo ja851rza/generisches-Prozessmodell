@@ -5,9 +5,8 @@ generischen Prozessmodells.
 
 ## 1. Herunterladen des generischen Prozessmodells
 
-Damit sie das Prozessmodell nutzen können, müssen sie es zuerst herunterladen. Hierfür müssen sie die Datei 
-[generischesProzessmodell.bpmn20.xml](../build/models/generischesProzessmodell.bpmn20.xml) lokal auf ihrem Rechner 
-speichern. 
+Nachdem Sie die das generische Prozessmodell heruntergeladen haben, müssen Sie auf ***model*** --> 
+***generischesProzessmodell.bpmn20.xml*** navigieren. 
 
 ## 2. Ein neues Projekt Anlegen
 
@@ -16,9 +15,9 @@ Dazu gehen sie wie folgt vor:
 
 1. Loggen sie sich hierfür im [Admincenter](https://admincenter.service-bw.de/admincenter/) ein.
 
-2. Wählen Sie den passenden Mandanten für Ihre Kommune aus. In unserem Beispiel ist es der Service-Kommune Mandant.
-Jede Kommune in Baden-Württemberg hat einen eigenen Mandanten. Hierfür geben Sie den Namen Ihrer Kommune einfach in dem
-auf dem Bild dargestellten Feld ein.
+2. Wählen Sie den passenden Mandanten für Ihre Kommune aus. In unserem Beispiel ist es der ***Service-Kommune*** Mandant.
+Jede Kommune in Baden-Württemberg hat einen eigenen Mandanten. Hierfür geben Sie den Namen Ihrer Kommune einfach in das
+auf dem Bild dargestellte Feld ein. Dieses befindet sich oben links auf der Seite.
 
     ![Mandanten Feld](../manual/img/mandantFeld.png)
 
@@ -26,7 +25,8 @@ auf dem Bild dargestellten Feld ein.
 Prozessmodelle auswählen.
 ![Image of Prozessmodell](../manual/img/prozessmodellReiter.png)
 
-4. Legen Sie nun ein neues Prozessmodell an und benennen Sie es entsprechend. Am besten benutzen Sie folgende 
+4. Legen Sie nun ein neues Prozessmodell an, indem Sie den Button ***+ Anlegen*** betätigen.
+Benutzen Sie folgende 
 Namenskonvention: Stadt - Antragsprozessname. z.B. Musterstadt - Hallenreservierung.
 
 5. Bevor sie zu der ***technischen Modellierung*** gelangen, müssen sie erst die ***fachliche Modellierung*** 
@@ -37,40 +37,52 @@ freigeben.
         - Der Name sollte in [CamelCase](https://en.wikipedia.org/wiki/Camel_case) geschrieben werden, 
         also z.B.: aichtalGewerbeanmeldungsProzess
         - Vermeiden Sie Umlaute (ä,ö,ü) 
+        - Vermeiden Sie Bindestriche
     3. Klicken Sie auf ***Datei freigeben***
     4. Kehren Sie zurück auf das Feld ***Fachliche Modellierung*** und drücken ***Stufe abschließen***. Bestätigen Sie  
-    das Dialogfenster mit weiter.
+    das Dialogfenster, indem Sie auf ***weiter*** klicken.
     5. Sie sollten jetzt bei der technischen Modellierung ein Prozessmodell erhalten mit demselben Namen.
 ![Image of Prozessmodell](../manual/img/beispielProzess.png)
 
-6. Wenn Sie in der technischen Modellierung angelangt sind, kann das heruntergeladene Modell durch das 
-generische Prozessmodell ersetzt werden. 
-Dazu muss der Reiter ***technische Modellierung*** aufgerufen werden und auf ***Datei ersetzen*** gedrückt 
-werden. 
+6. Wenn Sie im Reiter ***technischen Modellierung*** angelangt sind, navigieren Sie auf das vorhandene Prozessmodell
+und klicken auf ![Datei Ersetzen](../manual/img/dateiErsetzen.png).
+Ersetzen Sie das vorhandene Modell mit dem generischen Prozessmodell. 
 
-7. Nun muss nur noch das heruntergeladene Modell mit der .bpmn20.xml ausgewählt werden. 
-[generischesProzessmodell.bpmn20.xml](../build/models/generischesProzessmodell.bpmn20.xml)
+7. Dazu fügen Sie das heruntergeladene Modell mit der .bpmn20.xml endung ein. 
+***generischesProzessmodell.bpmn20.xml***
 
-8. Nach der Auswahl des generischen Prozessmodells drücken Sie auf nicht auf ***Speichern und deployen***, sondern nur auf
-***Speichern***.
+8. Nach der Auswahl des generischen Prozessmodells drücken Sie auf ***Speichern***.
 
 9. Nach der Speicherung müssen Sie den kopierten Namen einfügen, sodass sowohl in der ***fachlichen*** als auch in der 
 ***technischen*** ***Modellierung*** der gleiche Name gegeben ist. 
  
 10. Das Prozessmodell ist jetzt importiert. 
 
+## 3. Mandanten ID ermitteln
 
-## 3. Verknüpfung zum Projekt erstellen
+Die Mandanten ID brauchen Sie um das Prozessmodell Ihrem Mandanten zuzuordnen. Sie kann ermittelt werden, in dem Sie 
+auf der Hauptseite des Admincenters auf ***Organisationseinheiten*** --> ***Organisationseinheiten*** navigieren und 
+Ihren Mandanten anklicken.
+
+![Mandanten ID](../manual/img/mandantenID.png)
+
+## 4. Verknüpfung zum Projekt erstellen
 
 Das ***generische Prozessmodell*** wurde jetzt zwar erfolgreich importiert, damit es jedoch funktionieren kann, muss
-es für Ihren Antragsprozess angepasst werden. Hierzu sind weitere Einstellungen notwendig. 
-Dazu navigieren Sie auf ***technische Modellierung*** --> ***Datei bearbeiten*** auswählen. 
+es für Ihren Antragsprozess angepasst werden. 
+Hierzu sind weitere Einstellungen notwendig. 
+Dazu navigieren Sie auf Ihr Projekt ***technische Modellierung*** --> ****<ihr_erstellter_prozess*** --> 
+***Datei bearbeiten***. in unserem Beispiel:
 
+![Navigieren zum Projekt](../manual/img/projektNavigation.png) 
+
+Sie befinden sich nun im ***Prozessmodeller***.  
 Ändern Sie folgende Daten ab:
 1. ID des Prozesses
     - Sie müssen nun die ID und den Anzeigenamen des Prozessmodells abändern damit das Programm das 
     ***generische Prozessmodell*** als Ihr Projekt erkennen kann.
-    - Dafür navigieren Sie im Modeller auf die unten angezeigten Optionen.
+    - Wenn Sie auf ***Datei bearbeiten*** geklickt haben, befinden Sie sich nun im Prozessmodeller. Hier finden Sie 
+    im unteren Bereich der Maske die Einstellungen.  
     -  Die im Bild mit der ***1*** gekennzeichnete ID des Prozessmodells besteht aus der Kennung m, 
     Ihrer Mandanten ID und den für das Prozessmodell vergebenen Namen. 
        In unserem Beispiel ist es: Kennung m + Mandanten ID: 6000357  + Name: aichtalGewerbeanmeldungsProzess
@@ -88,27 +100,20 @@ das Speichern Feld, welches mit einer Disk gekennzeichnet ist. Der Name unter de
 ist irrelevant und wird nicht weiter gebraucht. 
     
 
-## 4. Formular erstellen
+## 5. Formular erstellen
 
-Erstellen Sie im nächsten Schritt ein Formular mithilfe der Anleitung [Formular anlegen](../manual/formular.md).
+Der nächste Schritt ist nun ein Formular zu erstellen. Dazu müssen Sie mit der Anleitung zur Erstellung von 
+Formularen weiter machen. Rufen Sie die Anleitung über diesen Link auf: 
 
-Um die von dem Antragsteller eingegebenen Werte im Sachbearbeiterformular zu übernehmen, muss eine ausgehende Anbindung
-im Antragstellerformular erstellt werden und eine eingehende Anbindung im Sachbearbeiterformular eingerichtet werden.
-Das übernimmt im generischen Prozessmodell die Prozessinstanzvariable ***genericForm*** diese muss nicht verändert werden.
+[Anleitung zum Formular Anlegen](../manual/formular.md)
 
-Ausgehende Anbindung in Antragstellerformular           |  Eingehende Anbindung im Sachbearbeiterformular
-    :-------------------------:|:-------------------------:
-    ![Ausgehende Anbindung](../manual/img/ausgehendeAnbindung.png)  |  ![Vorschau Fromular](../manual/img/eingehendeAnbindung.png)
-    
-Wie das funktioniert wird im [Formular anlegen](../manual/formular.md) unter dem Abschnitt Feldeigenschaften 
-Punkt ***5*** erklärt.
+## 6. Ermittlung wichtiger Daten
 
-## 5. Ermittlung wichtiger Daten
-
+Nachdem das Formular erstellt wurde, werden Sie nun wieder im Prozessmodeller agieren.
 Um das Prozessmodell mit dem gewünschten Formular verknüpfen zu können, müssen einige Daten ermittelt werden: 
 
-***TIPP:*** Sie können auch das gewünschte Formular aufrufen und oben in der URL die gesammelten Daten von oben auf 
-einen Blick sehen. Dann können Sie ganz einfach die Daten in der richtigen Form kopieren.  
+***TIPP:*** Wenn Sie sich noch im Formulardesigner befinden, können Sie die Daten auch der URL entnehmen. 
+ Dazu müssen Sie einfach die im bild zu sehenden Daten kopieren.  
     ![Nummer der Version](../manual/img/URLform.png)
 
 1. Mandanten ID
@@ -129,24 +134,37 @@ einen Blick sehen. Dann können Sie ganz einfach die Daten in der richtigen Form
 
 ## 6. Verknüpfung von Formular und Prozessmodell
 
+Damit das Formular in das Prozessmodell eingebunden werden kann, muss es im Prozessmodell wiedergegeben werden. 
+Wenn Sie sich im Admincenter befinden, dann müssen Sie 
+***Verfahrensmanagement*** --> ***Prozessmodelle*** und Ihr eigenes Projekt aufrufen. 
+Begeben Sie sich nun wieder in den Prozessmodeller indem Sie auf ***<ihr_projekt>*** --> ***<verson>*** --> 
+***Technische Modellierung*** --> ***<prozessmodell>*** und auf ***Datei bearbeiten*** klicken.
+
 Damit das Formular in das Prozessmodell eingebunden werden kann, muss es im Prozessmodell wiedergegeben werden.
 Hierfür führen Sie folgende Schritte aus: 
 
-1.  Begeben Sie sich in den Prozess-Modeller
+1.  Um sich in den Prozessmodeller zu begeben, müssen Sie 
+     ***Verfahrensmanagement*** --> ***Prozessmodelle*** und Ihr eigenes Projekt aufrufen. 
+     Begeben Sie sich nun wieder in den Prozessmodeller indem Sie auf ***<ihr_projekt>*** --> ***<verson>*** --> 
+     ***Technische Modellierung*** --> ***<prozessmodell>*** und auf ***Datei bearbeiten*** klicken.
 
-2. Gehen Sie auf die Einstellungen von dem User-Task ***${nameOfForm}*** und suchen Sie nach der Bezeichnung ***Form Key***
+2. Gehen Sie auf dem User-Task ***${nameOfForm}*** und suchen in den unten angezeigten
+    Einstellungen nach der Bezeichnung ***Form Key***
 
-3. Klicken Sie den Task an und ersetzen ***REPLACE_ME(4)*** durch die im Abschnitt Ermittlung wichtiger Daten
+3. Klicken Sie den in dieses Feld und ersetzen ***REPLACE_ME(3)*** durch die im Abschnitt Ermittlung wichtiger Daten
 gesammelten Daten im folgenden Format: 
     - formular<MandantenId>:<Name_des_formulars>:<version_des_formulares>
     - in unserem Beispiel ist es: formular:6000357:Aichtal_Gewerbeanmeldung:v1.0
 
 ## 7. Aufbau des generischen Prozessmodells
 
-Sie nun ein Formular an das Prozessmodell angebunden. Die nächsten Schritte befassen sich mit der Validierung von Daten.
-Dazu müssen Sie die Anleitung zum [generischen Prozessmodell](../manual/prozessmodell.md) aufrufen.
+Sie nun ein Formular an das Prozessmodell angebunden. Als Nächstes wollen Sie das Prozessmodell personalisieren.
+Dazu müssen Sie die Anleitung für das Verständnis des generischen Prozessmodells aufrufen.
+Diese finden Sie hier:
 
-### 7. Erstellung eines Formulars für den für die Genehmigung des Sachbearbeiters
+ ***[Verständnis generisches Prozessmodell](../manual/prozessmodell.md)***
+
+### 8. Erstellung eines Formulars für den für die Genehmigung des Sachbearbeiters
 
 Wenn Sie das Formular für den Antragsteller erfolgreich erstellt und importiert haben, muss der Sachbearbeiter 
 diesen Noch genehmigen. Damit der Sachbearbeiter die gleichen Werte angezeigt bekommt, muss das bereits erstellte Formular
@@ -267,4 +285,30 @@ Folgende Schritte sind notwendig um ein Formular zu deployen:
     
 ### 9. Prozess live nehmen
 
+Wenn die Entwicklung abgeschlossen ist und Sie das Prozessmodell live nehmen möchten, müssen Sie das dafür zuständige
+Innenministerium Kontaktieren.
+Dazu wurde eine E-Mail Vorlage erstellt, die Sie an die folgenden beiden Adressen senden müssen:
 
+ - klaus.ketterer@im.bwl.de
+ - service-bw@im.bwl.de
+ 
+ Der Inhalt der E-Mail muss der folgende sein:
+ 
+   ```
+   Sehr geehrte Damen und Herren,
+   
+   wir freuen uns sehr Ihnen mitteilen zu können, dass wir mit unserem Prozess >NAME DES PROZESSES< soweit sind, diesen in Betrieb nehmen zu können.
+    
+   Darum bitten wir Sie um das Deployment der folgenden Bestandteile:
+    
+   Formulare:
+   - >NAME DES FORMULARS< >VERSION DES FORMULARS<
+   - >NAME DES FORMULARS< >VERSION DES FORMULARS<
+    
+   Prozessmodelle:
+   - >NAME DES PROZESSMODELLS< >VERSION DES PROZESSMODELLS<
+    
+   Um die Information intern weiterzugeben, wären wir Ihnen um eine kurze Rückmeldung zum zeitlichen Ablauf sehr dankbar.
+   ```
+
+Nachdem Sie diese Mail gesendet haben, ist die Bearbeitung angeschlossen und der Prozess sollte live genommen werden.
