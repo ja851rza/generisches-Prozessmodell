@@ -55,10 +55,12 @@ Die Anleitung wurde in drei Teile unterteilt, die aufeinander aufbauen. Der Teil
 Abweichend von dem Leitfaden wird die Erstellung eines Formulars erklärt und im Anschluss dann das Prozessmodell. 
 
 ***WICHTIG:*** Bevor Sie anfangen die Bedienungsanleitung abzuarbeiten, laden Sie das Prozessmodell herunter. Dazu
-müssen Sie am oberen Rand der Seite auf den Button ***Code** drücken und das Prozessmodell als ZIP-Datei herunterlden.
-Entpacken Sie als nächstes die ZIP-Datei.
+müssen Sie am auf der Seite nach oben navigieren, den Button **Code** drücken und das Prozessmodell als 
+***ZIP-Datei*** herunterladen. Entpacken Sie als Nächstes die ZIP-Datei.
 
-Bitte Klicken Sie einen der folgenden Teile an:
+![Download Image](manual/img/downloadCode.png)
+
+Bitte klicken Sie einen der folgenden Teile an:
 
 1. [Voraussetzungen](manual/voraussetzungen.md)
 3. [Erstellung eines Formulars](manual/formular.md)
